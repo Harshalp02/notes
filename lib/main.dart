@@ -11,8 +11,9 @@ void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     routes: {
-      '/login': (context) => const LoginView(),
-      '/register': (context) => const RegisterView(),
+      '/login/': (context) => const LoginView(),
+      '/register/': (context) => const RegisterView(),
+      '/notes/': (context) => const NotesView(),
     },
     home: const HomePage(),
   ));
@@ -75,7 +76,7 @@ class _NotesViewState extends State<NotesView> {
                     if (shouldLogout) {
                       await FirebaseAuth.instance.signOut();
                       Navigator.of(context)
-                          .pushNamedAndRemoveUntil('/login', (route) => false);
+                          .pushNamedAndRemoveUntil('/login/', (route) => false);
                     }
                 }
               },
