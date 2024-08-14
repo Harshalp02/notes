@@ -3,7 +3,7 @@ import 'package:notes/constants/routers.dart';
 import 'package:notes/services/auth/auth_services.dart';
 import 'package:notes/views/login_view.dart';
 import 'package:notes/views/notes/new_note_view.dart';
-import 'package:notes/views/notes_view.dart';
+import 'package:notes/views/notes/notes_view.dart';
 import 'package:notes/views/register_view.dart';
 import 'package:notes/views/verify_email.dart';
 
