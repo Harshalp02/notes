@@ -31,10 +31,18 @@ class _NotesViewState extends State<NotesView> {
     return Scaffold(
         appBar: AppBar(
           title: const Text(
-            "Main UI",
+            "Your Notes",
             style: TextStyle(color: Colors.white),
           ),
           actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(newNoteRoute);
+                },
+                icon: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                )),
             PopupMenuButton<MenuAction>(
                 iconColor: Colors.white,
                 onSelected: (value) async {
@@ -43,8 +51,8 @@ class _NotesViewState extends State<NotesView> {
                       final shouldLogout = await showLogOutDialog(context);
                       if (shouldLogout) {
                         await AuthService.firebase().logOut();
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            loginRoute, (route) => false);
+                        Navigator.of(context)
+                            .pushNamedAndRemoveUntil(loginRoute, (_) => false);
                       }
                   }
                 },

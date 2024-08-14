@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notes/constants/routers.dart';
 import 'package:notes/services/auth/auth_services.dart';
 import 'package:notes/views/login_view.dart';
+import 'package:notes/views/notes/new_note_view.dart';
 import 'package:notes/views/notes_view.dart';
 import 'package:notes/views/register_view.dart';
 import 'package:notes/views/verify_email.dart';
@@ -16,6 +17,7 @@ void main() async {
       registrationRoute: (context) => const RegisterView(),
       notesRoute: (context) => const NotesView(),
       verifyEmailRoute: (context) => const VerifyEmailView(),
+      newNoteRoute: (context) => const NewNoteView(),
     },
     home: const HomePage(),
   ));
