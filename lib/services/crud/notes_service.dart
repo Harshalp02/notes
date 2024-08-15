@@ -26,7 +26,7 @@ class NoteService {
       _notesStreamController.stream.filter((note) {
         final currentUser = _user;
         if (currentUser != null) {
-          return note.userId == currentUser.id;
+          return note.userId == currentUser.id;  
         } else {
           throw UserShouldBeSetBeforeReadingAllNotes();
         }
@@ -289,7 +289,6 @@ class DatabaseNote {
   @override
   int get hashCode => id.hashCode;
 }
-
 const dbName = 'notes.db';
 const noteTable = 'note';
 const userTable = 'user';
@@ -314,3 +313,4 @@ const createUserTable = '''
         PRIMARY KEY("id" AUTOINCREMENT)
       );
       ''';
+
