@@ -5,8 +5,7 @@ import 'package:notes/services/auth/bloc/auth_bloc.dart';
 import 'package:notes/services/auth/bloc/auth_event.dart';
 import 'package:notes/services/auth/bloc/auth_state.dart';
 import 'package:notes/utilities/dialogs/error_dialog.dart';
-// import 'package:notes/utilities/dialogs/loading_dailog.dart'; 
-
+// import 'package:notes/utilities/dialogs/loading_dailog.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -48,7 +47,8 @@ class _LoginViewState extends State<LoginView> {
           //       showLoadingDialog(context: context, text: 'Loading....');
           // }
           if (state.exception is UserNotFoundAuthException) {
-            await showErrorDialog(context, "user not Found");
+            await showErrorDialog(
+                context, "Cannot find a user with the entered credentials");
           } else if (state.exception is WrongPasswordAuthException) {
             await showErrorDialog(context, "Wrong credentials");
           } else if (state.exception is GenericAuthException) {
@@ -68,10 +68,13 @@ class _LoginViewState extends State<LoginView> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
+              const Text(
+                  'Please log in to your account in order to interact with an create notes!'),
               TextField(
                 controller: _email,
                 enableSuggestions: false,
                 autocorrect: false,
+                autofocus: true,
                 keyboardType: TextInputType.emailAddress,
                 decoration:
                     const InputDecoration(hintText: 'Enter Your Email Here'),
@@ -115,6 +118,12 @@ class _LoginViewState extends State<LoginView> {
                       style: TextStyle(color: Colors.blue),
                     ),
                   )),
+              TextButton(
+                onPressed: () {
+                  context.read<AuthBloc>().add(const AuthEventForgetPassword());
+                },
+                child: const Text('I forgot my password'),
+              ),
               TextButton(
                 onPressed: () {
                   context.read<AuthBloc>().add(const AuthEventShouldRegister());

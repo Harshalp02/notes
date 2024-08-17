@@ -38,7 +38,7 @@ class LoadingScreen {
               maxWidth: size.width * 0.8,
               maxHeight: size.height * 0.8,
               minWidth: size.width * 0.5,
-            ).normalize(),
+            ).normalize() ,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
