@@ -4,6 +4,7 @@ import 'package:notes/constants/routers.dart';
 import 'package:notes/services/auth/auth_exception.dart';
 import 'package:notes/services/auth/bloc/auth_bloc.dart';
 import 'package:notes/services/auth/bloc/auth_event.dart';
+import 'package:notes/services/auth/bloc/auth_state.dart';
 import 'package:notes/utilities/dialogs/error_dialog.dart';
 
 class LoginView extends StatefulWidget {
@@ -61,33 +62,49 @@ class _LoginViewState extends State<LoginView> {
               decoration:
                   const InputDecoration(hintText: 'Enter Your Password Here'),
             ),
-            TextButton(
-              onPressed: () async {
-                final email = _email.text;
-                final password = _password.text;
-                try {
-                  context.read<AuthBloc>().add(AuthEventLogIn(email, password));
-                  // await AuthService.firebase()
-                  //     .logIn(email: email, password: password);
-                  // final user = AuthService.firebase().currentUser;
-                  // if (user?.isEmailVerified ?? false) {
-                  //   Navigator.of(context)
-                  //       .pushNamedAndRemoveUntil(notesRoute, (route) => false);
-                  // }
-                } on UserNotFoundAuthException {
-                  await showErrorDialog(context, "Error: User Not Found");
-                } on WrongPasswordAuthException {
-                  await showErrorDialog(context, "Error: Wrong Credentials");
-                } on GenericAuthException {
-                  await showErrorDialog(context, "Error: Authentication Error");
+            BlocListener<AuthBloc, AuthState>(
+              listener: (context, state) async {
+                if (state is AuthStateLoggedOut) {
+                  if (state.exception is UserNotFoundAuthException) {
+                    await showErrorDialog(context, "user not Found");
+                  } else if (state.exception is WrongPasswordAuthException) {
+                    await showErrorDialog(context, "Wrong credentials");
+                  } else {
+                    await showErrorDialog(context, "Authentication error");
+                  }
                 }
               },
-              child: const Center(
-                child: Text(
-                  "Login",
-                  style: TextStyle(color: Colors.blue),
-                ),
-              ),
+              child: TextButton(
+                  onPressed: () async {
+                    final email = _email.text;
+                    final password = _password.text;
+                    context
+                        .read<AuthBloc>()
+                        .add(AuthEventLogIn(email, password));
+                    //   try {
+
+                    //     await AuthService.firebase()
+                    //         .logIn(email: email, password: password);
+                    //     final user = AuthService.firebase().currentUser;
+                    //     if (user?.isEmailVerified ?? false) {
+                    //       Navigator.of(context)
+                    //           .pushNamedAndRemoveUntil(notesRoute, (route) => false);
+                    //     }
+                    //   } on UserNotFoundAuthException {
+                    //     await showErrorDialog(context, "Error: User Not Found");
+                    //   } on WrongPasswordAuthException {
+                    //     await showErrorDialog(context, "Error: Wrong Credentials");
+                    //   } on GenericAuthException {
+                    //     await showErrorDialog(
+                    //         context, "Error: Authentication Error");
+                    //   }
+                  },
+                  child: const Center(
+                    child: Text(
+                      "Login",
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  )),
             ),
             TextButton(
               onPressed: () {
